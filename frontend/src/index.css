@@ -1,0 +1,47 @@
+:root {
+  /* Light mode */
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-nav: #e5e7eb;
+  --bg-table-key: #f1f5f9;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-inverse: #ffffff;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  /* Dark mode */
+  --bg-page: #020617;
+  --bg-card: #020617;
+  --bg-nav: #020617;
+  --bg-table-key: #020617;
+
+  --text-primary: #e5e7eb;
+  --text-secondary: #94a3b8;
+  --text-inverse: #020617;
+
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --border: #1e293b;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+h2 {
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
