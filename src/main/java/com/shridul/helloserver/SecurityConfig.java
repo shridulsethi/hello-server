@@ -16,13 +16,27 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
+                // Enable CORS first (very important)
                 .cors(Customizer.withDefaults())
+
+                // Disable CSRF for stateless APIs
                 .csrf(csrf -> csrf.disable())
+
+                // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/health").permitAll()
+                        .requestMatchers(
+                                "/health",
+                                "/uptime",
+                                "/metrics",
+                                "/version",
+                                "/app"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
+
+                // Basic Auth (can be replaced with JWT later)
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -30,14 +44,36 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // IMPORTANT: Explicit origins only (no "*")
+        config.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "https://hello-server.vercel.app"   // 👈 replace if your URL differs
+        ));
+
+        config.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+        ));
+
         config.setAllowedHeaders(List.of("*"));
+
+        // Required when using Authorization headers
         config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Cache preflight response
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
         source.registerCorsConfiguration("/**", config);
+
         return source;
     }
 }
