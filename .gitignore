@@ -1,8 +1,9 @@
 HELP.md
 # Frontend
-frontend/node_modules
-frontend/build
-
+frontend/node_modules/
+frontend/build/
+frontend/.cache/
+frontend/**/.cache/
 # Backend
 target/
 .mvn/wrapper/maven-wrapper.jar
