@@ -3,8 +3,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(
+        origins = "http://localhost:3000",
+        allowCredentials = "true"
+)
 @RestController
 public class HelloController {
     private static final Logger log = LoggerFactory.getLogger(HelloController.class);
